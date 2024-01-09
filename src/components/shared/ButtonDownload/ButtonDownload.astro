@@ -1,0 +1,70 @@
+---
+const { content, href, id } = Astro.props;
+---
+
+<style lang="scss">
+    @use 'src/shared-styles/_variables.scss';
+@use 'src/shared-styles/_mixins.scss';
+    .linkButton {
+        @include mixins.button;
+        background-color: variables.$color-red-light;
+    }
+</style>
+<button-download data-id={id} data-href={href}>
+    <a class="linkButton" id="{id}" href={href} download>
+        <span>{content}</span>
+    </a>
+</button-download>
+
+<script>
+    // i have no idea how to include this here...
+    // import {copyTextToClipboard} from "../../../../js-code/library/copy-clipboard.js";
+
+    // based on example from
+    // https://docs.astro.build/en/guides/client-side-scripts/#pass-frontmatter-variables-to-scripts
+    class ButtonDownload extends HTMLElement {
+        constructor() {
+            super();
+
+            console.log("this", this);
+            // const button = this.querySelector("button");
+            // console.log("button", button);
+
+            // TODO: check if this is really working..
+            const copyImgURLAsImageToClipboard = async function (imgURL) {
+                // based on https://web.dev/articles/async-clipboard
+                console.log("imgURL", imgURL);
+                try {
+                    const data = await fetch(imgURL);
+                    const blob = await data.blob();
+                    await navigator.clipboard.write([
+                        new ClipboardItem({
+                            // The key is determined dynamically based on the blob's type.
+                            [blob.type]: blob,
+                        }),
+                    ]);
+                    console.log("Image copied.");
+                } catch (err) {
+                    console.error(err.name, err.message);
+                }
+            };
+
+            this.addEventListener("click", (event) => {
+              console.log(event);
+                const imgurl = this.dataset.href;
+                console.log(
+                    "click for ",
+                    this,
+                    "\n",
+                    "imgurl:",
+                    imgurl
+                );
+                if (imgurl) {
+                    copyImgURLAsImageToClipboard(imgurl);
+                }
+            });
+        }
+    }
+
+    customElements.define("button-download", ButtonDownload);
+</script>

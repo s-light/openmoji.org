@@ -30,4 +30,22 @@ const copyImgURLAsImageToClipboard = async function (imgURL) {
   }
 };
 
-export { copyTextToClipboard, copyImgURLAsImageToClipboard };
+const onclickCopyImageToClipboard = async function (event) {
+  // based on https://web.dev/articles/async-clipboard
+  try {
+    console.log("event", event);
+  //   const data = await fetch(imgURL);
+  //   const blob = await data.blob();
+  //   await navigator.clipboard.write([
+  //     new ClipboardItem({
+  //       // The key is determined dynamically based on the blob's type.
+  //       [blob.type]: blob,
+  //     }),
+  //   ]);
+  //   console.log("Image copied.");
+  // } catch (err) {
+  //   console.error(err.name, err.message);
+  // }
+}
+
+export { copyTextToClipboard, copyImgURLAsImageToClipboard, onclickCopyImageToClipboard }

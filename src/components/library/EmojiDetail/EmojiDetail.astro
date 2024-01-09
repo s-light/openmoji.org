@@ -138,15 +138,20 @@ console.log('Rendering page for emoji', openmoji.emoji, ' ', openmoji.hexcode);
         } -->
     </table>
 
-    <div class="downloadButtons emoji-variant-color">
-      <a class="linkButton" id="downloadSVG" href={filePathColorSVG} download>
+    <!-- tried to implement the Ctrl+Click = Copy action in different ways: -->
+    <!-- as component in ButttonDownload -->
+    <!-- and as script in -->
+    <!-- <script type="text/javascript" src="/js-code/copy-clipboard-onclick.js"></script> -->
+    <!-- for now it seems that this fails - at least in firefox.. -->
+    <div class="downloadButtons emoji-variant-color" >
+      <a class="linkButton" id="downloadSVG" href={filePathColorSVG} download onclick="onclickCopyImageToClipboard">
         <span>SVG</span>
       </a>
       <a class="linkButton" id="downloadPNG" href={filePathColorPNG} download>
         <span>PNG</span>
       </a>
     </div>
-    <div class="emoji-variant-black hidden">
+    <div class="downloadButtons emoji-variant-black hidden">
       <a class="linkButton" id="downloadSVG" href={filePathBlackSVG} download>
         <span>SVG</span>
       </a>
